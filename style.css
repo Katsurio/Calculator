@@ -15,12 +15,15 @@ body {
     top: 50%;
     transform: translate(-50%, -50%);
 }
-.display {
+#display {
     background-color: #40bf40;
     margin-bottom: 2%;
     height: 50px;
 }
 
 .column {
-    padding: 0 0 4% 0;
+    padding: 4%;
+}
+.btn {
+    margin: 0;
 }
