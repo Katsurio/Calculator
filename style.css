@@ -1,0 +1,26 @@
+.space-row {
+    height: 1vh;
+}
+body {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+.calculator-case {
+    background-color: #515151;
+    width: 30%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.display {
+    background-color: #40bf40;
+    margin-bottom: 2%;
+    height: 50px;
+}
+
+.column {
+    padding: 0 0 4% 0;
+}
