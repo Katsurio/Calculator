@@ -1,13 +1,52 @@
 $(document).ready(apply_click_handlers);
 var input_array = [''];
+var total_string;
 var input_index = 0;
-
+var operators = ['x', '-', '+', '/'];
 function apply_click_handlers() {
     $('.operands > .btn').click(receive_operand);
     $('.operators > .btn').click(receive_operator);
     $('.equals > .btn').on('click', function() {
         console.log(mathify_input_array(input_array));
-    })
+    });
+    $('.clear_entry > .btn').click(clear_entry);
+    $('.clear_all > .btn').click(clear_all);
+}
+function clear_all() {
+    display_inputs();
+    input_array = [''];
+    input_index = 0;
+    display_inputs();
+    $('#display').text(0);
+}
+function clear_entry() {
+    console.log("CHECK: clear_entry function called");
+    if(input_array.length === 1) {
+        console.log("CE function-IF ");
+        input_array[input_index].substring(input_array[0].length);
+    } else if(input_array[input_array.length - 1]==="" &&
+        input_array[input_array.length - 2].substr(0,3)==="+" ||
+        input_array[input_array.length - 2].substr(0,3)==="-" ||
+        input_array[input_array.length - 2].substr(0,3)==="x" ||
+        input_array[input_array.length - 2].substr(0,3)==="/") {
+            console.log(" clear_entry/IF CHECK before splice: ", input_array);
+            input_array.splice(input_array.length - 2, 2);
+            console.log("after splice: ", input_array);
+            input_index -= 2;
+    } else {
+        console.log(" clear_entry/ELSE CHECK: ", input_array);
+        console.log("before pop: ", input_array);
+        input_array.pop();
+        console.log("before pop: ", input_array);
+        input_index--;
+    }
+    display_inputs();
+}
+
+// Display inputs
+function display_inputs(){
+    total_string = input_array.join("");
+    $('#display').text(total_string);
 }
 // Takes in numbers/operands and adds to input_array
 function receive_operand(){
@@ -18,12 +57,14 @@ function receive_operand(){
         input_array[input_index] += $(this).text();
         console.log('input_array= ', input_array);
     }
+    display_inputs();
 }
 // Takes in operators and adds to input_array
 function receive_operator() {
     console.log('CALLED receive_operator');
     if (input_array[input_array.length - 1]===""){
         console.log("INVALID: Please input a number");
+        display_inputs();
     }
     // if (input_array[input_array.length - 1]==="+" ||
     //     input_array[input_array.length - 1]==="-" ||
@@ -38,9 +79,10 @@ function receive_operator() {
     console.log('input_array= ', input_array);
     input_index++;
     input_array[input_index] = '';
+    display_inputs();
     }
 }
-
+// Does the math for the input array's contents
 function mathify_input_array(arr){
     console.log("mathify function called");
     while(arr.length > 1) {
@@ -49,10 +91,12 @@ function mathify_input_array(arr){
         arr.unshift(get_total);
         console.log(operation, get_total);
     }
+    display_inputs();
     return arr;
 }
 
-// Does math calculations/converts string to/also identifies operator
+// Identifies type of operator then does math
+// calculations/converts string to float
 function calc(arr) {
     console.log("Calc function called");
     var tot = 0;
@@ -80,25 +124,9 @@ function calc(arr) {
                 break;
         }
     }
+    display_inputs();
     return tot;
 }
-
-
-// $('.btn').click(function() {
-//          var val = this.text();
-//          function my_calculator() {
-//             this.type = function() {
-//                 switch(this.type)
-//             }
-//         }
-// });
-
-
-
-
-
-
-
 
 
 // /**
