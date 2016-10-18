@@ -17,28 +17,26 @@ function clear_all() {
     input_array = [''];
     input_index = 0;
     display_inputs();
-    $('#display').text(0);
 }
 function clear_entry() {
+    var current_entry = input_array[input_index];
     console.log("CHECK: clear_entry function called");
-    if(input_array.length === 1) {
+    if(current_entry.length > 0) {
         console.log("CE function-IF ");
-        input_array[input_index].substring(input_array[0].length);
-    } else if(input_array[input_array.length - 1]==="" &&
-        input_array[input_array.length - 2].substr(0,3)==="+" ||
-        input_array[input_array.length - 2].substr(0,3)==="-" ||
-        input_array[input_array.length - 2].substr(0,3)==="x" ||
-        input_array[input_array.length - 2].substr(0,3)==="/") {
-            console.log(" clear_entry/IF CHECK before splice: ", input_array);
-            input_array.splice(input_array.length - 2, 2);
-            console.log("after splice: ", input_array);
-            input_index -= 2;
-    } else {
-        console.log(" clear_entry/ELSE CHECK: ", input_array);
-        console.log("before pop: ", input_array);
-        input_array.pop();
-        console.log("before pop: ", input_array);
-        input_index--;
+        var temp = current_entry.substring(0,current_entry.length-1);
+        input_array[input_index] = temp;
+        //TODO This would have acted as a delete button, but it was adding operands to my operator string
+        // if(temp.length===0){
+        //     if(input_index === 0) {
+        //         console.log("CE has nothing to clear");
+        //     } else {
+        //         console.log(" clear_entry/ELSE CHECK: ", input_array);
+        //         console.log("before pop: ", input_array);
+        //         input_array.pop();
+        //         console.log("after pop: ", input_array);
+        //         input_index--;
+        //     }
+        // }
     }
     display_inputs();
 }
@@ -46,7 +44,11 @@ function clear_entry() {
 // Display inputs
 function display_inputs(){
     total_string = input_array.join("");
-    $('#display').text(total_string);
+    if(total_string.length > 0){
+        $('#display').text(total_string);
+    } else {
+        $('#display').text('0');
+    }
 }
 // Takes in numbers/operands and adds to input_array
 function receive_operand(){
@@ -127,40 +129,6 @@ function calc(arr) {
     display_inputs();
     return tot;
 }
-
-
-// /**
-//  * Created by Katsurio on 10/12/16.
-//  */
-// function calculate_display(type, value, item) {
-//     switch(value){
-//         case undefined:
-//             $('#display').text("");
-//             break;
-//         default:
-//             $('#display').text(value);
-//             break;
-//     }
-//
-// }
-//
-// var my_calculator =  new calculator(calculate_display);
-// $(document).ready(function() {
-//     $('.btn').click(function(){
-//         var val = $(this).text();
-//         switch (val) {
-//             case 'CE':
-//                 my_calculator.allClear();
-//                 break;
-//             case 'C':
-//                 my_calculator.clear();
-//                 break;
-//             default:
-//                 my_calculator.addItem($(this).text());
-//                 break;
-//         }
-//     });
-// });
 
 
 
