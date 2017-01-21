@@ -1,6 +1,3 @@
-.space-row {
-    height: 1vh;
-}
 body {
     width: 100vw;
     height: 100vh;
@@ -27,3 +24,4 @@ body {
 .btn {
     margin: 0;
 }
+
