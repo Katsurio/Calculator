@@ -129,8 +129,3 @@ function calc(arr) {
     display_inputs();
     return tot;
 }
-
-
-
-
-
