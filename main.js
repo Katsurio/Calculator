@@ -24,7 +24,7 @@ function clear_all() {
 }
 
 function clear_entry() {
-    vlet current_entry = input_array[input_index];
+    let current_entry = input_array[input_index];
     if(current_entry.length > 0) {
         let temp = current_entry.substring(0,current_entry.length-1);
         input_array[input_index] = temp;
@@ -34,7 +34,19 @@ function clear_entry() {
 
 // Display inputs
 function display_inputs(){
+    console.log("input_array: " + input_array);
+
     total_string = input_array.join("");
+
+    if (total_string.charAt(0) === 0) {
+        total_string = total_string.slice(1);
+    }
+
+    if ((total_string.charAt(0) === "0") && (total_string.charAt(1) !== ".")) {
+        total_string = total_string.slice(1);
+        console.log("cows");
+    }
+
     if(total_string.length > 0){
         $('#display').text(total_string);
     } else {
@@ -43,10 +55,35 @@ function display_inputs(){
 }
 
 // Takes in numbers/operands and adds to input_array
-function receive_operand(){
-    if (input_array[input_index]["input_index".length-1] === "."){
-        console.log('INVALID: Consecutive decimals')
-    } else {
+function receive_operand() {
+    if ((input_array[input_index] === "") && (input_array[input_index - 1] === undefined)) {
+        input_array[input_index] = 0.;
+    }
+
+    // if ((input_array[input_index] === ".") && (input_array[input_index - 1] === ".")) {
+    //     console.log('INVALID: Consecutive decimals');
+    //     return;
+    //     input_array[input_index] = ".";
+    // }
+
+
+    let currentVal = input_array[input_index];
+    // if (currentVal.includes(".")) {
+    //     console.log("moo");
+        // input_array[input_index] = "0." + $(this).text();
+    // }
+    // if (input_array[input_index] === ".") {
+    //     if()
+    //     console.log("moo");
+    //     input_array[input_index] = "0." + $(this).text();
+    // }
+
+    if (input_array[input_index] === ".") {
+        console.log("moo");
+        input_array[input_index] = "0." + $(this).text();
+    }
+
+    else {
         input_array[input_index] += $(this).text();
     }
     display_inputs();
@@ -76,6 +113,7 @@ function mathify_input_array(arr){
         console.log(operation, get_total);
     }
     display_inputs();
+    input_index = 0;
     return arr;
 }
 
@@ -102,7 +140,8 @@ function calc(arr) {
                 tot = num1 * num2;
                 break;
             case "/":
-                tot = num1 / num2;
+                tot = (num1 / num2) !== Infinity ? num1 / num2 : "ERROR";
+
                 break;
         }
     }
